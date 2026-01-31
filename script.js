@@ -1,7 +1,7 @@
 const tracks = [
   {
     title: "Daydream",
-    src: "https://archive.org/details/daydream_202601"
+    src: "http://dn720601.ca.archive.org/0/items/daydream_202601/daydream.mp3"
   }
 ];
 
