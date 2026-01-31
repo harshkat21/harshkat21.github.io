@@ -1,78 +1,84 @@
-// ===== TRACK LIST =====
 const tracks = [
-  {
-    title: "Daydream",
-    src: "https://archive.org/download/daydream_202601/daydream.mp3"
-  }
+{
+title: "Daydream",
+src: "https://archive.org/download/daydream_202601/daydream.mp3?download=1"
+}
 ];
 
-// ===== GLOBAL STATE =====
-let sound = null;
-let currentTrackIndex = null;
 
-// ===== UI HELPERS =====
-function startReels() {
-  document.getElementById("leftReel").classList.add("spin");
-  document.getElementById("rightReel").classList.add("spin");
+let audio = new Audio();
+audio.preload = "none";
+
+
+audio.addEventListener("play", startReels);
+audio.addEventListener("pause", stopReels);
+audio.addEventListener("ended", stopReels);
+
+
+const player = document.getElementById("player");
+const nowPlaying = document.getElementById("nowPlaying");
+const progress = document.getElementById("progress");
+const currentTimeEl = document.getElementById("current-time");
+const durationEl = document.getElementById("duration");
+
+
+function openPlayer(index) {
+audio.pause();
+audio.src = tracks[index].src;
+audio.load();
+
+
+nowPlaying.innerText = tracks[index].title;
+player.classList.add("active");
+
+
+audio.play();
 }
+
+
+function togglePlay() {
+if (audio.paused) audio.play();
+else audio.pause();
+}
+
+
+function stopTrack() {
+audio.pause();
+audio.currentTime = 0;
+}
+
+
+audio.addEventListener("loadedmetadata", () => {
+durationEl.innerText = formatTime(audio.duration);
+});
+
+
+audio.addEventListener("timeupdate", () => {
+if (!audio.duration) return;
+const percent = (audio.currentTime / audio.duration) * 100;
+progress.value = percent;
+currentTimeEl.innerText = formatTime(audio.currentTime);
+});
+
+
+progress.addEventListener("input", () => {
+if (!audio.duration) return;
+audio.currentTime = (progress.value / 100) * audio.duration;
+});
+
+
+function formatTime(sec) {
+const m = Math.floor(sec / 60);
+const s = Math.floor(sec % 60).toString().padStart(2, "0");
+return `${m}:${s}`;
+}
+
+
+function startReels() {
+document.querySelectorAll('.reel').forEach(r => r.classList.add('spinning'));
+}
+
 
 function stopReels() {
-  document.getElementById("leftReel").classList.remove("spin");
-  document.getElementById("rightReel").classList.remove("spin");
-}
-
-// ===== CORE PLAYER LOGIC =====
-function openPlayer(index) {
-  const player = document.getElementById("player");
-  const title = document.getElementById("nowPlaying");
-
-  player.style.display = "flex";
-  title.innerText = tracks[index].title;
-
-  // Stop previous track if any
-  if (sound) {
-    sound.stop();
-    sound.unload();
-  }
-
-  currentTrackIndex = index;
-
-  // Create & PLAY audio inside user interaction (critical)
-  sound = new Howl({
-    src: [tracks[index].src],
-    html5: true,
-    preload: true,
-    volume: 1.0,
-    onplay: startReels,
-    onpause: stopReels,
-    onstop: stopReels,
-    onend: stopReels
-  });
-
-  sound.play(); // MUST be here
-}
-
-// ===== CONTROLS =====
-function play() {
-  if (!sound) return;
-
-  if (!sound.playing()) {
-    sound.play();
-  }
-}
-
-function pause() {
-  if (!sound) return;
-  sound.pause();
-}
-
-function closePlayer() {
-  if (sound) {
-    sound.stop();
-    sound.unload();
-    sound = null;
-  }
-
-  stopReels();
-  document.getElementById("player").style.display = "none";
+document.querySelectorAll('.reel').forEach(r => r.classList.remove('spinning'));
 }
