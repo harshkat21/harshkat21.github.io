@@ -53,13 +53,21 @@ function renderTrackList() {
   });
 }
 
-document.addEventListener('DOMContentLoaded', () => {
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', () => {
+    try {
+      renderTrackList();
+    } catch (error) {
+      console.error('Failed to render track list:', error);
+    }
+  });
+} else {
   try {
     renderTrackList();
   } catch (error) {
     console.error('Failed to render track list:', error);
   }
-});
+}
 
 // Cache for loaded lyrics
 let lyricsCache = {};
