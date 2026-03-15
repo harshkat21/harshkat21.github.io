@@ -6,12 +6,12 @@ duration: "3:24"
 },
 {
 title: "Heatwave",
-src: "https://archive.org/download/heatwave_202603/heatwave.mp3?download=1", // Placeholder - replace with actual audio
+src: "https://archive.org/download/heatwave_202603/heatwave.mp3?download=1",
 duration: "2:15"
 },
 {
 title: "tbd",
-src: "https://www.soundjay.com/misc/sounds/bell-ringing-05.wav", // Placeholder - replace with actual audio
+src: "https://www.soundjay.com/misc/sounds/bell-ringing-05.wav",
 duration: "2:58"
 }
 ];
@@ -37,6 +37,10 @@ const volume = document.getElementById("volume");
 const playBtn = document.getElementById("playBtn");
 
 function openPlayer(index) {
+if (index < 0 || index >= tracks.length) {
+console.error("Invalid track index:", index);
+return;
+}
 currentTrackIndex = index;
 loadTrack(index);
 player.classList.add("active");
