@@ -6,16 +6,22 @@ duration: "3:24",
 description: "Dreams almost always take you to places unexpected, and longed for, to an extent that you forget that you are not asleep, but awake and manifesting your deepest desires in the moment. This track is a sonic representation of that experience, with ethereal synths and a steady beat that guides you through the dreamscape."
 },
 {
+title: "The devil",
+src: "https://archive.org/download/devil_202603/devil.mp3?download=1",
+duration: "2:16",
+description: "Experimenting by channeling my inner AC/DC fan, otherwise a pretty unserious track"
+},
+{
 title: "Heatwave",
 src: "https://archive.org/download/heatwave_202603/heatwave.mp3?download=1",
 duration: "2:15",
-description: "An intense beat-driven track with heavy bass and distorted synths"
+description: "its got a nice groove - and dont take the lyrics too seriosly :)"
 },
 {
 title: "For You",
 src: "https://archive.org/download/foryou_202603/foryou.mp3?download=1",
 duration: "2:37",
-description: "A mysterious ambient piece with evolving textures"
+description: "Track is pretty self explanatory, I'll leave it at that wink wink"
 }
 ];
 
