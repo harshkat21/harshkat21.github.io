@@ -53,8 +53,13 @@ function renderTrackList() {
   });
 }
 
-renderTrackList();
-audio.volume = 0.7;
+document.addEventListener('DOMContentLoaded', () => {
+  try {
+    renderTrackList();
+  } catch (error) {
+    console.error('Failed to render track list:', error);
+  }
+});
 
 // Cache for loaded lyrics
 let lyricsCache = {};
