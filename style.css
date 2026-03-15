@@ -408,6 +408,13 @@ body {
   color: var(--secondary);
   margin: 0;
   white-space: pre-line;
+  min-height: 100px;
+}
+
+#lyricsText:empty::before {
+  content: "Loading lyrics...";
+  color: var(--accent);
+  font-style: italic;
 }
 
 @media (max-width: 768px) {

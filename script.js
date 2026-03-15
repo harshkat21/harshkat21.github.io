@@ -3,22 +3,19 @@ const tracks = [
 title: "Daydream",
 src: "https://archive.org/download/daydream_202601/daydream.mp3?download=1",
 duration: "3:24",
-description: "A mellow electronic track with dreamy synths and atmospheric pads",
-lyrics: "Lost in thoughts, drifting away...\nStars align in the milky way...\nDreams unfold in shades of grey..."
+description: "Dreams almost always take you to places unexpected, and longed for, to an extent that you forget that you are not asleep, but awake and manifesting your deepest desires in the moment. This track is a sonic representation of that experience, with ethereal synths and a steady beat that guides you through the dreamscape."
 },
 {
 title: "Heatwave",
 src: "https://archive.org/download/heatwave_202603/heatwave.mp3?download=1",
 duration: "2:15",
-description: "An intense beat-driven track with heavy bass and distorted synths",
-lyrics: "Heat rising, can't escape...\nPulse pounding, heart beats fast...\nSummer nights that forever last..."
+description: "An intense beat-driven track with heavy bass and distorted synths"
 },
 {
 title: "For You",
 src: "https://archive.org/download/foryou_202603/foryou.mp3?download=1",
 duration: "2:37",
-description: "A mysterious ambient piece with evolving textures",
-lyrics: "Echoes in the void...\nWhispers of the unknown...\nTime stands still, forever shown..."
+description: "A mysterious ambient piece with evolving textures"
 }
 ];
 
@@ -26,6 +23,25 @@ let currentTrackIndex = 0;
 let audio = new Audio();
 audio.preload = "none";
 audio.volume = 0.7;
+
+// Cache for loaded lyrics
+let lyricsCache = {};
+
+async function loadLyrics(trackTitle) {
+  if (lyricsCache[trackTitle]) {
+    return lyricsCache[trackTitle];
+  }
+
+  try {
+    const response = await fetch('lyrics.json');
+    const lyricsData = await response.json();
+    lyricsCache = lyricsData; // Cache all lyrics
+    return lyricsData[trackTitle]?.lyrics || "No lyrics available for this track.";
+  } catch (error) {
+    console.error('Error loading lyrics:', error);
+    return "Failed to load lyrics. Please try again.";
+  }
+}
 
 audio.addEventListener("play", startReels);
 audio.addEventListener("pause", stopReels);
@@ -60,9 +76,17 @@ audio.src = tracks[index].src;
 audio.load();
 nowPlaying.innerText = tracks[index].title;
 
-// Update lyrics display
+// Show loading state for lyrics
 const lyricsText = document.getElementById('lyricsText');
-lyricsText.textContent = tracks[index].lyrics || "No lyrics available for this track.";
+lyricsText.textContent = "Loading lyrics...";
+
+// Load lyrics asynchronously
+loadLyrics(tracks[index].title).then(lyrics => {
+  lyricsText.textContent = lyrics;
+}).catch(error => {
+  console.error('Error loading lyrics for track:', tracks[index].title, error);
+  lyricsText.textContent = "Failed to load lyrics.";
+});
 }
 
 function togglePlay() {
