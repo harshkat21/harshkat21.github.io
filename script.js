@@ -29,6 +29,33 @@ let currentTrackIndex = 0;
 let audio = new Audio();
 audio.volume = 0.7;
 
+function renderTrackList() {
+  const tracklistEl = document.getElementById('tracklist');
+  tracklistEl.innerHTML = '';
+
+  tracks.forEach((track, index) => {
+    const li = document.createElement('li');
+    li.addEventListener('click', () => openPlayer(index));
+
+    const icon = document.createElement('i');
+    icon.className = 'fas fa-play';
+    li.appendChild(icon);
+
+    const titleText = document.createTextNode(` ${track.title}`);
+    li.appendChild(titleText);
+
+    const durationSpan = document.createElement('span');
+    durationSpan.className = 'duration';
+    durationSpan.textContent = track.duration;
+    li.appendChild(durationSpan);
+
+    tracklistEl.appendChild(li);
+  });
+}
+
+renderTrackList();
+audio.volume = 0.7;
+
 // Cache for loaded lyrics
 let lyricsCache = {};
 
