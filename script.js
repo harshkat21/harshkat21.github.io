@@ -21,7 +21,6 @@ description: "A mysterious ambient piece with evolving textures"
 
 let currentTrackIndex = 0;
 let audio = new Audio();
-audio.preload = "none";
 audio.volume = 0.7;
 
 // Cache for loaded lyrics
@@ -33,7 +32,8 @@ async function loadLyrics(trackTitle) {
   }
 
   try {
-    const response = await fetch('lyrics.json');
+    // Add cache-busting parameter to prevent browser caching
+    const response = await fetch(`lyrics.json?v=${Date.now()}`);
     const lyricsData = await response.json();
     lyricsCache = lyricsData; // Cache all lyrics
     return lyricsData[trackTitle]?.lyrics || "No lyrics available for this track.";
