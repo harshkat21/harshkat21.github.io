@@ -6,24 +6,36 @@
 <title>Harshith — Tape Archives</title>
 <link rel="stylesheet" href="style.css" />
 <link href="https://fonts.googleapis.com/css2?family=VT323&family=Inter:wght@300;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
 
-
 <div class="grain"></div>
-
 
 <main class="container">
 <section class="welcome">
 <h1>📼 Tape Archives</h1>
 <p class="subtitle">A personal music collection — play loud, rewind gently.</p>
 
-
 <ul class="tracklist">
-<li onclick="openPlayer(0)">▶ Daydream</li>
+<li onclick="openPlayer(0)">
+<i class="fas fa-play"></i> Daydream
+<span class="duration">3:24</span>
+</li>
+<li onclick="openPlayer(1)">
+<i class="fas fa-play"></i> Midnight Drive
+<span class="duration">4:12</span>
+</li>
+<li onclick="openPlayer(2)">
+<i class="fas fa-play"></i> Neon Dreams
+<span class="duration">2:58</span>
+</li>
+<li onclick="openPlayer(3)">
+<i class="fas fa-play"></i> Retro Wave
+<span class="duration">3:45</span>
+</li>
 </ul>
 </section>
-
 
 <section class="player" id="player">
 <div class="cassette">
@@ -36,10 +48,16 @@
 </div>
 </div>
 
-
 <div class="controls">
-<button onclick="togglePlay()">⏯</button>
-<button onclick="stopTrack()">⏹</button>
+<button onclick="prevTrack()" title="Previous"><i class="fas fa-step-backward"></i></button>
+<button onclick="togglePlay()" id="playBtn" title="Play/Pause"><i class="fas fa-play"></i></button>
+<button onclick="stopTrack()" title="Stop"><i class="fas fa-stop"></i></button>
+<button onclick="nextTrack()" title="Next"><i class="fas fa-step-forward"></i></button>
+</div>
+
+<div class="volume-wrap">
+<i class="fas fa-volume-up"></i>
+<input type="range" id="volume" min="0" max="100" value="70" />
 </div>
 
 <div class="progress-wrap">
@@ -49,7 +67,6 @@
 </div>
 </section>
 </main>
-
 
 <script src="script.js"></script>
 </body>
