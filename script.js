@@ -2,17 +2,23 @@ const tracks = [
 {
 title: "Daydream",
 src: "https://archive.org/download/daydream_202601/daydream.mp3?download=1",
-duration: "3:24"
+duration: "3:24",
+description: "A mellow electronic track with dreamy synths and atmospheric pads",
+lyrics: "Lost in thoughts, drifting away...\nStars align in the milky way...\nDreams unfold in shades of grey..."
 },
 {
 title: "Heatwave",
 src: "https://archive.org/download/heatwave_202603/heatwave.mp3?download=1",
-duration: "2:15"
+duration: "2:15",
+description: "An intense beat-driven track with heavy bass and distorted synths",
+lyrics: "Heat rising, can't escape...\nPulse pounding, heart beats fast...\nSummer nights that forever last..."
 },
 {
-title: "tbd",
-src: "https://www.soundjay.com/misc/sounds/bell-ringing-05.wav",
-duration: "2:58"
+title: "For You",
+src: "https://archive.org/download/foryou_202603/foryou.mp3?download=1",
+duration: "2:37",
+description: "A mysterious ambient piece with evolving textures",
+lyrics: "Echoes in the void...\nWhispers of the unknown...\nTime stands still, forever shown..."
 }
 ];
 
@@ -53,6 +59,10 @@ audio.pause();
 audio.src = tracks[index].src;
 audio.load();
 nowPlaying.innerText = tracks[index].title;
+
+// Update lyrics display
+const lyricsText = document.getElementById('lyricsText');
+lyricsText.textContent = tracks[index].lyrics || "No lyrics available for this track.";
 }
 
 function togglePlay() {
@@ -143,6 +153,21 @@ document.querySelectorAll('.reel').forEach(r => r.classList.add('spinning'));
 
 function stopReels() {
 document.querySelectorAll('.reel').forEach(r => r.classList.remove('spinning'));
+}
+
+function toggleLyrics() {
+const lyricsDisplay = document.getElementById('lyricsDisplay');
+const lyricsBtn = document.getElementById('lyricsBtn');
+
+if (lyricsDisplay.style.display === 'none') {
+lyricsDisplay.style.display = 'block';
+lyricsBtn.innerHTML = '<i class="fas fa-times"></i>';
+lyricsBtn.title = 'Hide Lyrics';
+} else {
+lyricsDisplay.style.display = 'none';
+lyricsBtn.innerHTML = '<i class="fas fa-music"></i>';
+lyricsBtn.title = 'Show Lyrics';
+}
 }
 
 // Initialize
